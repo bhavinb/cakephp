@@ -423,7 +423,6 @@ class CakeLog {
 		if (is_string($type) && empty($scope) && !in_array($type, self::$_levels)) {
 			$scope = $type;
 		}
-		$logged = false;
 		foreach (self::$_Collection->enabled() as $streamName) {
 			$logger = self::$_Collection->{$streamName};
 			$types = $scopes = $config = array();
@@ -450,12 +449,7 @@ class CakeLog {
 				($correctLevel && $inScope)
 			) {
 				$logger->write($type, $message);
-				$logged = true;
 			}
-		}
-		if (!$logged) {
-			self::_autoConfig();
-			self::stream('default')->write($type, $message);
 		}
 		return true;
 	}
